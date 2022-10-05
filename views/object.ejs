@@ -1,0 +1,49 @@
+<% layout("layout/page") -%>
+<% block("title", "Детальная информация о параметре") -%>
+<% stylesheet("/css/style.css") -%>
+<% script("/js/graphics.js")  -%>
+
+<a href="/">Главная страница</a>
+<h1>Объект - <%= object %></h1>
+<div>
+    <p>Детальная информация о параметре: <%= parameter %></p>
+    <div class="graphic">
+        <h2 class="graphic_title">График изменения состояния за сутки</h2>
+        <canvas class="graphic_canvas" data-object="<%= object %>" data-parameter="<%= parameter %>" data-time="1" width="800" height="150"></canvas>
+        <div class="graphic_value">
+            <div>Max: 00.00</div><div>Min: 00.00</div>
+        </div>
+        <div class="graphic_date">
+            <div>Day of the week, DD month YYYY г., HH:MM:SS</div>
+            <div>Day of the week, DD month YYYY г., HH:MM:SS</div>
+        </div>
+    </div>
+    <div class="graphic">
+        <h2 class="graphic_title">График изменения состояния за неделю</h2>
+        <canvas class="graphic_canvas" data-object="<%= object %>" data-parameter="<%= parameter %>"  data-time="7" width="800" height="150"></canvas>
+        <div class="graphic_value">
+            <div>Max: 00.00</div><div>Min: 00.00</div>
+        </div>
+        <div class="graphic_date">
+            <div>Day of the week, DD month YYYY г., HH:MM:SS</div>
+            <div>Day of the week, DD month YYYY г., HH:MM:SS</div>
+        </div>
+    </div>    
+    <h2 class="graphic_title">Таблица изменения состояния за неделю</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Значение</th>
+            </tr>  
+        </thead>
+        <% for (parameter of result) { %>
+        <tr <% if (parameter.value == 0) { %>class="warning" <% } %>>
+            <td><%= parameter.date.toLocaleString('ru-RU', {
+                timeZone: 'Europe/Astrakhan'
+            }) %></td>
+            <td><% if (parameter.value == 0) { %>Нет сигнала<% } else { %>Есть сигнал<% } %></td>
+        </tr>
+        <% } %>
+    </table>
+</div>

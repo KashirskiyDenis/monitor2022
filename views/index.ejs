@@ -1,0 +1,19 @@
+<% layout("layout/page") -%>
+<% block("title", "Мониторинг наличия сигнала") -%>
+<% stylesheet("/css/style.css") -%>
+<% script("/js/script.js") -%>
+
+<h1>Мониторинг наличия сигнала</h1>
+<% for (param in stateObjects) { %>
+  <div id="<%= param %>" class="object" >
+    <h2 class="objectTitle"><%= param %></h2>
+    <div class="parameterContainer">      
+      <% stateObjects[param].parameters.forEach((parameter, i) => { %>
+        <div id="<%= parameter.parameterName %>" class="parameter <% if (parameter.value == 0) { %>warning <% } %>">
+          <p><a href="/object/<%= param %>/parameter/<%= parameter.parameterName %>"><%= parameter.parameterName %></a></p>
+          <p> <%= parameter.date%></p>
+        </div>
+      <% }); %>      
+    </div>
+  </div>
+<% } %>
